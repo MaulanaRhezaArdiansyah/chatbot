@@ -97,4 +97,9 @@ src/
 
 | Variable | Required | Description |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | Yes | API key from console.anthropic.com |
+| `LLM_PROVIDER` | No | Provider to use: `anthropic`, `openai`, `deepseek` (default: `anthropic`) |
+| `ANTHROPIC_API_KEY` | If using `anthropic` | API key from [console.anthropic.com](https://console.anthropic.com) |
+| `OPENAI_API_KEY` | If using `openai` | API key from [platform.openai.com](https://platform.openai.com) |
+| `DEEPSEEK_API_KEY` | If using `deepseek` | API key from [platform.deepseek.com](https://platform.deepseek.com) |
+
+Only the API key for the selected provider needs to be filled in.

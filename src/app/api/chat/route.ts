@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { createChatModel, convertToLangChainMessages, SYSTEM_PROMPT, ChatMessage } from "@/lib/langchain";
+import { createChatModel, convertToLangChainMessages, SYSTEM_PROMPT, ChatMessage, getActiveProviderLabel } from "@/lib/langchain";
 import { SystemMessage } from "@langchain/core/messages";
 
 export const runtime = "nodejs";
@@ -28,7 +28,6 @@ export async function POST(req: NextRequest) {
       async start(controller) {
         try {
           const streamResult = await model.stream(langchainMessages);
-          let chunkCount = 0;
 
           for await (const chunk of streamResult) {
             let content: string;
@@ -42,16 +41,12 @@ export async function POST(req: NextRequest) {
               content = String(chunk.content ?? "");
             }
 
-            chunkCount++;
-            console.log(`[chat] chunk #${chunkCount}:`, JSON.stringify(content));
-
             if (content) {
               const data = JSON.stringify({ content });
               controller.enqueue(encoder.encode(`data: ${data}\n\n`));
             }
           }
 
-          console.log(`[chat] stream done. total chunks: ${chunkCount}`);
           controller.enqueue(encoder.encode("data: [DONE]\n\n"));
           controller.close();
         } catch (err) {
@@ -68,6 +63,7 @@ export async function POST(req: NextRequest) {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
         Connection: "keep-alive",
+        "X-LLM-Provider": getActiveProviderLabel(),
       },
     });
   } catch (err) {
