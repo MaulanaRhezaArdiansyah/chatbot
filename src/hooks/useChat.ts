@@ -115,7 +115,17 @@ export function useChat() {
 
               try {
                 const parsed = JSON.parse(data);
-                if (parsed.content) {
+                if (parsed.error) {
+                  const errMsg = `Error: ${parsed.error}`;
+                  setConversations((prev) =>
+                    prev.map((c) => {
+                      if (c.id !== conversationId) return c;
+                      const msgs = [...c.messages];
+                      msgs[msgs.length - 1] = { role: "assistant", content: errMsg };
+                      return { ...c, messages: msgs };
+                    })
+                  );
+                } else if (parsed.content) {
                   accumulated += parsed.content;
                   const current = accumulated;
                   setConversations((prev) =>

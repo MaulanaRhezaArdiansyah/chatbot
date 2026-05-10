@@ -28,6 +28,7 @@ export async function POST(req: NextRequest) {
       async start(controller) {
         try {
           const streamResult = await model.stream(langchainMessages);
+          let chunkCount = 0;
 
           for await (const chunk of streamResult) {
             let content: string;
@@ -41,15 +42,20 @@ export async function POST(req: NextRequest) {
               content = String(chunk.content ?? "");
             }
 
+            chunkCount++;
+            console.log(`[chat] chunk #${chunkCount}:`, JSON.stringify(content));
+
             if (content) {
               const data = JSON.stringify({ content });
               controller.enqueue(encoder.encode(`data: ${data}\n\n`));
             }
           }
 
+          console.log(`[chat] stream done. total chunks: ${chunkCount}`);
           controller.enqueue(encoder.encode("data: [DONE]\n\n"));
           controller.close();
         } catch (err) {
+          console.error("[chat] stream error:", err);
           const error = err instanceof Error ? err.message : "Stream error";
           controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error })}\n\n`));
           controller.close();
