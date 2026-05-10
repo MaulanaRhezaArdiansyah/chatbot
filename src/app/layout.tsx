@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "DeepChat — AI Assistant",
-  description: "A modern AI chatbot powered by DeepSeek and LangChain",
+  description: "A modern AI chatbot powered by LangChain",
 };
 
 export default function RootLayout({

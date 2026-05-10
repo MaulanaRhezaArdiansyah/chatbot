@@ -1,6 +1,6 @@
-# DeepChat — AI Chatbot
+# AI Chatbot
 
-A modern AI chatbot built with **Next.js 16**, **LangChain.js**, and **DeepSeek** as the LLM provider. Features real-time streaming responses, multi-conversation management, and a clean SaaS-style UI.
+A modern AI chatbot built with **Next.js 16**, **LangChain.js**, and **Claude** as the LLM provider. Features real-time streaming responses, multi-conversation management, and a clean SaaS-style UI.
 
 ## Tech Stack
 
@@ -8,14 +8,14 @@ A modern AI chatbot built with **Next.js 16**, **LangChain.js**, and **DeepSeek*
 |---|---|
 | Framework | Next.js 16 (App Router) |
 | Language | TypeScript |
-| LLM Orchestration | LangChain.js (`@langchain/openai`) |
-| LLM Provider | DeepSeek (`deepseek-chat`) |
+| LLM Orchestration | LangChain.js (`@langchain/anthropic`) |
+| LLM Provider | Anthropic Claude (`claude-sonnet-4-6`) |
 | Styling | Tailwind CSS + Typography plugin |
 | Streaming | Server-Sent Events (SSE) |
 
 ## Features
 
-- Real-time streaming responses from DeepSeek AI
+- Real-time streaming responses from Claude AI
 - Multi-conversation with sidebar history
 - Markdown rendering with syntax-highlighted code blocks
 - Stop generation mid-stream
@@ -26,7 +26,7 @@ A modern AI chatbot built with **Next.js 16**, **LangChain.js**, and **DeepSeek*
 
 - Node.js 18+
 - npm 9+
-- DeepSeek API Key → [platform.deepseek.com](https://platform.deepseek.com)
+- Anthropic API Key → [console.anthropic.com](https://console.anthropic.com)
 
 ## Installation
 
@@ -45,7 +45,7 @@ npm install
 
 ### 3. Configure environment variables
 
-Copy the example env file and fill in your DeepSeek API key:
+Copy the example env file and fill in your Anthropic API key:
 
 ```bash
 cp .env.local.example .env.local
@@ -54,10 +54,10 @@ cp .env.local.example .env.local
 Open `.env.local` and set your key:
 
 ```env
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
 ```
 
-> Get your API key from [platform.deepseek.com/api-keys](https://platform.deepseek.com/api-keys)
+> Get your API key from [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys)
 
 ### 4. Run the development server
 
@@ -90,11 +90,11 @@ src/
 ├── hooks/
 │   └── useChat.ts          # Chat state & streaming logic
 └── lib/
-    └── langchain.ts        # LangChain + DeepSeek setup
+    └── langchain.ts        # LangChain setup
 ```
 
 ## Environment Variables
 
 | Variable | Required | Description |
 |---|---|---|
-| `DEEPSEEK_API_KEY` | Yes | API key from platform.deepseek.com |
+| `ANTHROPIC_API_KEY` | Yes | API key from console.anthropic.com |

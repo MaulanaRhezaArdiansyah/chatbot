@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { createDeepSeekModel, convertToLangChainMessages, SYSTEM_PROMPT, ChatMessage } from "@/lib/langchain";
+import { createChatModel, convertToLangChainMessages, SYSTEM_PROMPT, ChatMessage } from "@/lib/langchain";
 import { SystemMessage } from "@langchain/core/messages";
 
 export const runtime = "nodejs";
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const model = createDeepSeekModel(true);
+    const model = createChatModel(true);
     const langchainMessages = [
       new SystemMessage(SYSTEM_PROMPT),
       ...convertToLangChainMessages(messages),

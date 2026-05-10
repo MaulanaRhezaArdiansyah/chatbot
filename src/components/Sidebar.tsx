@@ -103,7 +103,7 @@ export function Sidebar({
 
       {/* Footer */}
       <div className="px-4 py-4 border-t border-gray-100">
-        <p className="text-xs text-gray-400">Powered by DeepSeek + LangChain</p>
+        <p className="text-xs text-gray-400">Powered by LangChain</p>
       </div>
     </aside>
   );

@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatAnthropic } from "@langchain/anthropic";
 import { HumanMessage, AIMessage, SystemMessage } from "@langchain/core/messages";
 
 export interface ChatMessage {
@@ -6,15 +6,11 @@ export interface ChatMessage {
   content: string;
 }
 
-export function createDeepSeekModel(streaming = false) {
-  return new ChatOpenAI({
-    apiKey: process.env.DEEPSEEK_API_KEY!,
-    modelName: "deepseek-chat",
+export function createChatModel(streaming = false) {
+  return new ChatAnthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY!,
+    model: "claude-sonnet-4-6",
     streaming,
-    configuration: {
-      baseURL: "https://api.deepseek.com/v1",
-    },
-    temperature: 0.7,
     maxTokens: 4096,
   });
 }

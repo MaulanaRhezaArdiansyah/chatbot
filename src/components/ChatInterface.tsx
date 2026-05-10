@@ -99,7 +99,7 @@ function EmptyState({ onSuggest }: { onSuggest: (msg: string) => void }) {
       </div>
       <h2 className="text-xl font-semibold text-gray-900 mb-2">How can I help you today?</h2>
       <p className="text-sm text-gray-500 mb-8 max-w-sm">
-        Ask me anything — I&apos;m powered by DeepSeek AI and LangChain.
+        Ask me anything — I&apos;m powered by LangChain.
       </p>
 
       <div className="grid grid-cols-2 gap-3 w-full max-w-lg">
