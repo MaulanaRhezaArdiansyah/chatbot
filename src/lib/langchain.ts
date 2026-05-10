@@ -12,7 +12,7 @@ type Provider = "anthropic" | "openai" | "deepseek";
 const PROVIDER_CONFIGS: Record<Provider, { model: string; label: string }> = {
   anthropic: { model: "claude-haiku-4-5-20251001", label: "Claude" },
   openai:    { model: "gpt-4o",            label: "GPT-4o" },
-  deepseek:  { model: "deepseek-chat",     label: "DeepSeek" },
+  deepseek:  { model: "deepseek-v4-flash",  label: "DeepSeek" },
 };
 
 function getProvider(): Provider {
