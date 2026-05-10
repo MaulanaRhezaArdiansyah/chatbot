@@ -61,31 +61,24 @@ export function useChat() {
 
       const userMessage: ChatMessage = { role: "user", content };
 
-      setConversations((prev) =>
-        prev.map((c) => {
-          if (c.id !== conversationId) return c;
-          const updated = { ...c, messages: [...c.messages, userMessage] };
-          if (c.title === "New Chat" && c.messages.length === 0) {
-            updated.title = content.slice(0, 40) + (content.length > 40 ? "..." : "");
-          }
-          return updated;
-        })
-      );
-
       const currentMessages = [
         ...(conversations.find((c) => c.id === conversationId)?.messages ?? []),
         userMessage,
       ];
 
       setIsStreaming(true);
-      const assistantMessageId = uuidv4();
       let accumulated = "";
 
       setConversations((prev) =>
         prev.map((c) => {
           if (c.id !== conversationId) return c;
+          const title =
+            c.title === "New Chat" && c.messages.length === 0
+              ? content.slice(0, 40) + (content.length > 40 ? "..." : "")
+              : c.title;
           return {
             ...c,
+            title,
             messages: [...c.messages, userMessage, { role: "assistant" as const, content: "" }],
           };
         })
@@ -157,7 +150,6 @@ export function useChat() {
       } finally {
         setIsStreaming(false);
         abortControllerRef.current = null;
-        void assistantMessageId;
       }
     },
     [activeConversationId, conversations, isStreaming]

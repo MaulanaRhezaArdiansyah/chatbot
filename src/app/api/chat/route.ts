@@ -30,8 +30,18 @@ export async function POST(req: NextRequest) {
           const streamResult = await model.stream(langchainMessages);
 
           for await (const chunk of streamResult) {
-            const content = chunk.content;
-            if (typeof content === "string" && content) {
+            let content: string;
+            if (typeof chunk.content === "string") {
+              content = chunk.content;
+            } else if (Array.isArray(chunk.content)) {
+              content = chunk.content
+                .map((c) => (typeof c === "string" ? c : (c as { text?: string }).text ?? ""))
+                .join("");
+            } else {
+              content = String(chunk.content ?? "");
+            }
+
+            if (content) {
               const data = JSON.stringify({ content });
               controller.enqueue(encoder.encode(`data: ${data}\n\n`));
             }
